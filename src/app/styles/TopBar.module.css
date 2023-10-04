@@ -1,0 +1,48 @@
+.container {
+  background-color: rgba(245, 245, 245, 1);
+  color: var(--back);
+
+  padding: 4px 48px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.links {
+  display: none;
+}
+
+.links a {
+  display: inline-block;
+  margin: 0 16px 0 0;
+}
+
+.linksAccount {
+  display: flex;
+  
+  width: 100%;
+  padding: 0 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.linksAccount a {
+  margin: 0 16px 0 0;
+}
+
+@media (min-width: 991px) {
+  .linksAccount span {
+    display: none;
+  }
+
+  .links {
+    display: inline;
+    width: 50%;
+    padding: 0 15px;
+  }
+
+  .linksAccount{
+    width: 50%;
+    justify-content: flex-end;
+  }
+}
