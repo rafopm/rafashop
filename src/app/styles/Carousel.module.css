@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    margin: 30px auto;
+    gap: 15px;
+    flex-direction: column;
+}
+
+.offers{
+    gap: 14px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.offerText{
+    position: absolute;
+    bottom: 20%;
+    text-align: center;
+    width: 100%;
+}
+
+@media (min-width: 991px) {
+  .container {
+    max-width: 100%;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+    padding: 0 48px;
+    flex-direction: row;
+    gap: 0;
+  }
+
+  .carouselContainer {
+    flex: 0 0 66.66667%;
+    max-width: 66.66667%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .offers{
+
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%;
+    padding-right: 15px;
+    padding-left: 15px;
+    
+  }
+}

@@ -1,6 +1,7 @@
 .container {
   display: none;
   padding: 16px 48px;
+  margin: 0 12px;
 }
 
 .brand {
@@ -36,6 +37,7 @@
 .search input {
     border: none;
     padding: 6px 12px;
+    width: 100%;
 }
 
 .searchIcon{
