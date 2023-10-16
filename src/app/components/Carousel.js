@@ -7,18 +7,18 @@ const CarouselHome = () => {
     const carouselItems = [
         {
             image: 'img/carousel-1.jpg',
-            title: 'First slide label',
-            description: 'Nulla vitae elit libero, a pharetra augue mollis interdum.',
+            title: '.',
+            description: '.',
         },
         {
             image: 'img/carousel-2.jpg',
-            title: 'Second slide label',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            title: '.',
+            description: '.',
         },
         {
             image: 'img/carousel-3.jpg',
-            title: 'Third slide label',
-            description: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur.',
+            title: '.',
+            description: '.',
         },
     ];
 

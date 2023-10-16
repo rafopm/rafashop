@@ -10,10 +10,9 @@ const TopBar = () => {
     return (
         <div className={Styles.container}>
             <div className={Styles.links}>
-                <Link href='/'>About</Link>
-                <Link href='/'>Contact</Link>
-                <Link href='/'>Help</Link>
-                <Link href='/'>FAQs</Link>
+                <Link href='/about'>Nosotros</Link>
+                <Link href='/contact'>Contacto</Link>
+                <Link href='/faqs'>FAQs</Link>
 
             </div>
 

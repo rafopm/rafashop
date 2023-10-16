@@ -50,22 +50,18 @@ const NavBar = () => {
                 <Col lg={9}>
                     <Navbar expand="lg" bg="dark" variant="dark" className="py-3 py-lg-0 px-0">
                         <Navbar.Brand href="" className="text-decoration-none d-block d-lg-none">
-                            <span className="h1 text-uppercase text-dark  px-2" style={{ "background-color": "#fff" }}>RAFA</span>
-                            <span className="h1 text-uppercase text-light px-2 ml-n1" style={{ "background-color": "#FFD333" }}>SHOP</span>
+                            <span className="h1 text-uppercase text-dark  px-2" style={{ "backgroundColor": "#fff" }}>RAFA</span>
+                            <span className="h1 text-uppercase text-light px-2 ml-n1" style={{ "backgroundColor": "#FFD333" }}>SHOP</span>
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="navbarCollapse">
                             <span className="navbar-toggler-icon" />
                         </Navbar.Toggle>
                         <Navbar.Collapse id="navbarCollapse" className="justify-content-between">
                             <Nav className="navbar-nav mr-auto py-0">
-                                <Nav.Link href="index.html" className="nav-item nav-link active">Home</Nav.Link>
-                                <Nav.Link href="shop.html" className="nav-item nav-link">Shop</Nav.Link>
-                                <Nav.Link href="detail.html" className="nav-item nav-link">Shop Detail</Nav.Link>
-                                <NavDropdown title="Pages" id="nav-dropdown" >
-                                    <NavDropdown.Item href="cart.html" >Shopping Cart</NavDropdown.Item>
-                                    <NavDropdown.Item href="checkout.html">Checkout</NavDropdown.Item>
-                                </NavDropdown>
-                                <Nav.Link href="contact.html" className="nav-item nav-link">Contact</Nav.Link>
+                                <Nav.Link href="/" className="nav-item nav-link active">Home</Nav.Link>
+                                <Nav.Link href="/shop" className="nav-item nav-link">Shop</Nav.Link>
+                                
+                                <Nav.Link href="/contact" className="nav-item nav-link">Contacto</Nav.Link>
                             </Nav>
                             <Nav className="navbar-nav ml-auto py-0 d-none  d-lg-flex gap-3 align-items-center" style={{ height: '65px' }}>
                                 <Nav.Link href="" className="btn px-0 ">

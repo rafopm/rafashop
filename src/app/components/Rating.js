@@ -5,18 +5,17 @@ import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Rating = ({ rate }) => {
   const stars = [];
-
   for (let i = 0; i < 5; i++) {
     if (i < Math.floor(rate)) {
       stars.push(<FontAwesomeIcon key={i} icon={faStar} />);
     } else if (i === Math.floor(rate) && rate % 1 !== 0) {
       stars.push(<FontAwesomeIcon key={i} icon={faStarHalfAlt} />);
     } else {
-      stars.push(<FontAwesomeIcon key={i} icon={['far', 'star']} />);
+      stars.push(<FontAwesomeIcon key={i} icon={faStar} style={{color:"antiquewhite"}}/>);
+      
     }
   }
-
-  return <div>{stars}</div>;
+  return <>{stars}</>;
 };
 
 export default Rating;
