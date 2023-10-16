@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import Styles from '../styles/TopBar.module.css'
 import {FaHeart,FaShoppingCart} from 'react-icons/fa'
+import LoginButton from './LoginButton'
 
 const TopBar = () => {
 
@@ -17,7 +18,7 @@ const TopBar = () => {
             </div>
 
             <div className={Styles.linksAccount}>
-                <Link href='/'>Login</Link>
+                <div > <LoginButton /> </div>
                 <Link href='/'>USD</Link>
                 <Link href='/'>ENG</Link>
                 <span><FaHeart /> 0 </span>

@@ -25,7 +25,7 @@ const ProductList = () => {
 
     const topRatedProducts = filteredProducts
         .sort((a, b) => b.rating.rate - a.rating.rate)
-        .slice(0, 12);
+        .slice(0, 10);
 
     return (
         <div className="container-fluid pt-5 pb-3">
