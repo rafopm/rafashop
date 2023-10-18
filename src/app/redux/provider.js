@@ -1,5 +1,4 @@
 'use client'
-import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { Provider } from 'react-redux';
@@ -7,12 +6,15 @@ import store from './store';
 
 
 const Providers = ({ children }) => {
+
+  const redirectUri = typeof window !== 'undefined' ? window.location.origin : '';
+
   return (
     <Auth0Provider
-      domain="dev-71anfduatoh05h1n.us.auth0.com"
-      clientId="qJyBTZV6iXNpR984LniOmE18jx18dHFE"
+      domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN}
+      clientId={process.env.NEXT_PUBLIC_AUTH0_ID}
       authorizationParams={{
-        redirect_uri: window.location.origin
+        redirect_uri: redirectUri
       }}
     >
       <Provider store={store}>
@@ -21,6 +23,5 @@ const Providers = ({ children }) => {
     </Auth0Provider>
   );
 };
-
 
 export default Providers;

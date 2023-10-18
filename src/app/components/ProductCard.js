@@ -28,10 +28,10 @@ const ProductCard = ({ item, showAs, qty }) => {
 
                         <div >
                             <div >
-                                <h2>{item}</h2>
+                                <h2>{item.title}</h2>
                             </div>
                             <div >
-                                <div>{item}</div>
+                                <div>{item.price}</div>
                             </div>
                             <div >
                                 <h2>Pídelo por Whatsapp</h2>
@@ -83,7 +83,7 @@ const ProductCard = ({ item, showAs, qty }) => {
                     {/* <a className="btn btn-outline-dark btn-square" href="">
                                     <FontAwesomeIcon icon={faSyncAlt} />
                                 </a> */}
-                    <Link className="btn btn-outline-dark btn-square" href={`/shop/${item.id}`}>
+                    <Link className="btn btn-outline-dark btn-square" href={`/shop/${convertToPath(item.title)}-${item.id}`}>
                         <FontAwesomeIcon icon={faSearch} />
                     </Link>
                 </div>

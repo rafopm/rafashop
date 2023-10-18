@@ -17,8 +17,8 @@ export async function getPathFromIds() {
 }
 
 export async function getItemsData(id){
-  const items = await getItems();
-
+  const items = await fetchProducts();
+console.log("items",items)
   const product = items.find((item) => convertToPath(item.title) === id);
 
   return {

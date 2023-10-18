@@ -7,7 +7,7 @@ import { FaSearch } from 'react-icons/fa';
 const Brand = () => {
     const handleSearch = (event) => {
         const searchTerm = event.target.value;
-        // Aquí puedes realizar la lógica para buscar productos con el término ingresado
+       
         console.log('Buscar productos con el término:', searchTerm);
     };
 
