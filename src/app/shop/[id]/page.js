@@ -17,7 +17,6 @@ const Page = ({ params }) => {
             try {
                 if (productId) {
                     const response = await dispatch(fetchProductById(productId));
-                    console.log(response);
                     setDatos(response.payload);
                 }
             } catch (error) {

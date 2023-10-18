@@ -8,7 +8,6 @@ const instance = axios.create({
 export const fetchProductById = createAsyncThunk(
   'products/fetchProductById',
   async (productId) => {
-    console.log(productId);
     const response = await instance.get(`/products/${productId}`);
     return response.data;
   }
@@ -42,15 +41,7 @@ const productsSlice = createSlice({
     searchTermUpdated: (state, action) => {
       state.searchTerm = action.payload;
     },
-    getItems: (state, action) => {
-      const product = state.items.find(
-        (product) => convertToPath(product.title) === action.payload
-      );
-      return {
-        id: action.payload,
-        data: product,
-      };
-    },
+
   },
   extraReducers: (builder) => {
     builder
