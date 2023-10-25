@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://fakestoreapi.com/',
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL_API,
 });
 
 export const fetchProductById = createAsyncThunk(

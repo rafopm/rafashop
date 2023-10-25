@@ -12,6 +12,9 @@ import RelatedProducts from './RelatedProducts';
 import CarouselProducts from './CarouselProducts';
 
 const ProductCard = ({ item, showAs, qty }) => {
+    const decodedHTML = Buffer.from(item.detalles, 'base64').toString('utf-8');
+
+
     const generateWhatsAppLink = () => {
         const number = "51123456789";
         const url = `https://wa.me/${number}?text=${encodeURIComponent(
@@ -28,23 +31,21 @@ const ProductCard = ({ item, showAs, qty }) => {
                     <Row className="px-xl-5">
                         <Col lg={5} className="mb-30">
                             <Carousel id="product-carousel" className="carousel slide" data-ride="carousel">
-                                <Carousel.Item className="active">
-                                    <img className="w-100 h-100" src="img/product-1.jpg" alt="Image" />
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <img className="w-100 h-100" src="img/product-2.jpg" alt="Image" />
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <img className="w-100 h-100" src="img/product-3.jpg" alt="Image" />
-                                </Carousel.Item>
-                                <Carousel.Item>
-                                    <img className="w-100 h-100" src="img/product-4.jpg" alt="Image" />
-                                </Carousel.Item>
+
+
+                                {item.imagenes.map((imagen, index) => (
+                                    <Carousel.Item key={index}>
+                                        <img className="w-100 h-100" src={imagen.url} alt={imagen.description} style={{ objectFit: 'cover' }} />
+                                        <Carousel.Caption>
+                                            
+                                        </Carousel.Caption>
+                                    </Carousel.Item>
+                                ))}
                             </Carousel>
                         </Col>
                         <Col lg={7} className="h-auto mb-30">
                             <div className="h-100 bg-light p-30">
-                                <h3>Product Name Goes Here</h3>
+                                <h3>{item.nombre}</h3>
                                 <div className="d-flex mb-3">
                                     <div className="text-primary mr-2">
                                         <small className="fas fa-star"></small>
@@ -197,6 +198,7 @@ const ProductCard = ({ item, showAs, qty }) => {
                             </div>
                         </Col>
                     </Row>
+
                     <Row className="px-xl-5">
                         <Col>
                             <Tabs
@@ -204,15 +206,13 @@ const ProductCard = ({ item, showAs, qty }) => {
                                 id="uncontrolled-tab-example"
                                 className="mb-3"
                             >
-                                <Tab eventKey="home" title="Home">
-                                    Tab content for Home
+                                <Tab eventKey="home" title="Especificaciones">
+                                    <div dangerouslySetInnerHTML={{ __html: decodedHTML }} />
                                 </Tab>
-                                <Tab eventKey="profile" title="Profile">
-                                    Tab content for Profile
+                                <Tab eventKey="profile" title="Detalles adicionales">
+                                    {item.informacion_adicional}
                                 </Tab>
-                                <Tab eventKey="contact" title="Contact" >
-                                    Tab content for Contact
-                                </Tab>
+
                             </Tabs>
                         </Col>
                     </Row>
@@ -230,12 +230,12 @@ const ProductCard = ({ item, showAs, qty }) => {
                 </div>
                 <div>
                     <h3>
-                        <div>{item.title}</div>
+                        <div>{item.nombre}</div>
                     </h3>
 
-                    <div>{item.price}</div>
+                    <div>{item.precio}</div>
                     {qty === 0 ? "" : <div>{qty} units</div>}
-                    {qty === 0 ? "" : <div>Subtotal: ${qty * item.price}</div>}
+                    {qty === 0 ? "" : <div>Subtotal: ${qty * item.precio}</div>}
                 </div>
             </Card>
         );
@@ -244,7 +244,7 @@ const ProductCard = ({ item, showAs, qty }) => {
     return (
         <Card style={{ maxWidth: '350px', padding: "20px" }} >
             <div className={Styles.imageContainer}>
-                <Card.Img variant="top" src={item.image} className={Styles.image} />
+                <Card.Img variant="top" src={item.imagenes[0].url} className={Styles.image} />
                 <div className={Styles.productAction}>
                     <a className="btn btn-outline-dark btn-square" href="">
                         <FontAwesomeIcon icon={faShoppingCart} />
@@ -255,15 +255,15 @@ const ProductCard = ({ item, showAs, qty }) => {
                     {/* <a className="btn btn-outline-dark btn-square" href="">
                                     <FontAwesomeIcon icon={faSyncAlt} />
                                 </a> */}
-                    <Link className="btn btn-outline-dark btn-square" href={`/shop/${convertToPath(item.title)}-${item.id}`}>
+                    <Link className="btn btn-outline-dark btn-square" href={`/shop/${convertToPath(item.nombre)}-${item._id}`}>
                         <FontAwesomeIcon icon={faSearch} />
                     </Link>
                 </div>
             </div>
             <Card.Body className='text-center'>
-                <Card.Title>{item.title}</Card.Title>
+                <Card.Title>{item.nombre}</Card.Title>
                 <Card.Text>
-                    <span>$ {item.price}</span>
+                    <span>$ {item.precio.valor}</span>
                     <span>
                         <Rating rate={item.rating.rate} />
                     </span>

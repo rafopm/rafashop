@@ -22,7 +22,7 @@ function CarouselProducts() {
   }, [dispatch]);
 
   const filteredProducts = products.filter((product) =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const relatedProducts = filteredProducts
@@ -47,15 +47,15 @@ function CarouselProducts() {
         <h3>Tambien te puede interesar</h3>
       <div className={Styles.carousel} ref={carousel}>
         {relatedProducts.map((item) => {
-          const { id, title, price, image } = item;
+          const { _id, nombre, precio, imagenes } = item;
           return (
-            <div className={Styles.item} key={id}>
+            <div className={Styles.item} key={_id}>
               <div className={Styles.image}>
-                <img src={image} alt={title} />
+                <img src={imagenes[0].url} alt={nombre} />
               </div>
               <div className={Styles.info}>
-                <span className={Styles.name}>{title}</span>
-                <span className={Styles.price}>U$ {price}</span>
+                <span className={Styles.name}>{nombre}</span>
+                <span className={Styles.price}>U$ {precio.valor}</span>
               </div>
             </div>
           );

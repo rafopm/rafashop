@@ -6,7 +6,7 @@ import ProductCard from '@/app/components/ProductCard';
 
 const Page = ({ params }) => {
 
-    const match = params.id.match(/(\d+)$/);
+    const match = params.id.match(/(\d+[a-zA-Z0-9]+)$/);
     const productId = match ? match[1] : null;
 
     const dispatch = useDispatch();

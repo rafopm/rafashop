@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     fetchProducts,
     selectSearchTerm,
-  } from "../redux/productsSlice";
+} from "../redux/productsSlice";
 import ProductCard from './ProductCard';
 
 const ProductList = () => {
@@ -20,7 +20,7 @@ const ProductList = () => {
     }, [dispatch]);
 
     const filteredProducts = products.filter((product) =>
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+        product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const topRatedProducts = filteredProducts
@@ -31,16 +31,16 @@ const ProductList = () => {
         <div className="container-fluid pt-5 pb-3">
             <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4"><span className=" pr-3">Productos</span></h2>
             <div className="d-flex justify-content-around flex-wrap  mx-xl-5 gap-2">
-               
-                        {topRatedProducts.map((product) => (
-                            <ProductCard
-                                key={product.id}
-                                item={product}
-                                showAs="Default" 
-                            />
-                        ))}
-                    
-                
+
+                {topRatedProducts.map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        item={product}
+                        showAs="Default"
+                    />
+                ))}
+
+
             </div>
         </div>
 
