@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
       <Providers>
         <Head>
           <script
-            src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyB5a_j_VkwtGD42H1ZoTpg9g30Wx2m8Y2I&libraries=places`} // Reemplaza TU_API_KEY con tu clave de API de Google Maps
+            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_KEY_GOOGLE_MAPS}&libraries=places`} // Reemplaza TU_API_KEY con tu clave de API de Google Maps
             async
             defer
           ></script>
