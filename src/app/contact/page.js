@@ -9,7 +9,7 @@ const Contact = () => {
         <div className="col-lg-7 mb-5">
           <div className="contact-form  p-30">
             <div id="success"></div>
-            <form name="sentMessage" id="contactForm" novalidate="novalidate">
+            <form name="sentMessage" id="contactForm" >
               <div className="control-group">
                 <input type="text" className="form-control rounded-0 " id="name" placeholder="Nombre"
                   required="required" data-validation-required-message="Escriba su nombre" />

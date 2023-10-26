@@ -1,10 +1,10 @@
 'use client'
 import { useEffect, useRef } from "react";
-
+ 
 const loadGoogleMapsScript = () => {
     return new Promise((resolve) => {
       const script = document.createElement("script");
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyB5a_j_VkwtGD42H1ZoTpg9g30Wx2m8Y2I&libraries=places`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_KEY_GOOGLE_MAPS}&libraries=places`;
       script.defer = true;
       script.async = true;
       script.onload = () => {
