@@ -1,18 +1,40 @@
 'use client'
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectUser, loginUser, logoutUser } from '../redux/loginSlice';
+import { useCookies } from 'react-cookie';
 
-const LoginButton = () => {
-  const { loginWithRedirect, isAuthenticated, logout,user } = useAuth0();
+function LoginButton({ onClick }) {
+  const [cookies, setCookie, removeCookie] = useCookies(['userLogin']);
+  const user = useSelector((state) => selectUser(state)); // Utilizar el selector dentro de useSelector
 
-  user && console.log("Autenticado:", isAuthenticated, "Usuario:", user.name);
+  const dispatch = useDispatch();
 
-  
-  if (isAuthenticated) {
-    return <button className=" border-0 "  style={{ marginRight: '10px' }}  onClick={() => logout()}>Logout</button>;
-  }
+  useEffect(() => {
+    if (cookies.userLogin) {
+      dispatch(loginUser(cookies.userLogin));
+    } else {
+      dispatch(logoutUser());
+    }
+  }, [cookies.userLogin, dispatch]);
 
-  return <button className=" border-0 "   style={{ marginRight: '10px' }}  onClick={() => loginWithRedirect()}>Log In</button>;
-};
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    // Eliminar la cookie de inicio de sesión
+    removeCookie('userLogin');
+    // Realizar cualquier otra acción necesaria para cerrar sesión
+    // ...
+  };
+
+  console.log('userLogin', user);
+
+  return (
+    <div>
+      <button onClick={user ? handleLogout : onClick}>
+        {user ? <span>Log out</span> : <span>Log in</span>}
+      </button>
+    </div>
+  );
+}
 
 export default LoginButton;
