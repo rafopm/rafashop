@@ -23,12 +23,14 @@ const LoginForm = ({ onClose }) => {
     if (cookies.userLogin) {
       onClose();
     }
-  }, [cookies.userLogin, onClose]);
+    if (user) {
+      setCookie('userLogin', user);
+    }
+  }, [cookies.userLogin, onClose, user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
-    setCookie('userLogin', user);
   };
 
   return (
@@ -57,10 +59,15 @@ const LoginForm = ({ onClose }) => {
               </Button>
             </div>
           </Form.Group>
-          <Button variant="primary" type="submit" disabled={loginStatus === 'loading'}>
-            {loginStatus === 'loading' ? 'Loading...' : 'Submit'}
-          </Button>
-          {loginStatus === 'failed' && <div className="error-message">{loginError}</div>}
+          <div>
+            <Button variant="primary" type="submit" disabled={loginStatus === 'loading'}>
+              {loginStatus === 'loading' ? 'Loading...' : 'Iniciar sesión'}
+            </Button>
+            <Button variant="primary" type="register" disabled={loginStatus === 'loading'}>
+              {loginStatus === 'loading' ? 'Loading...' : 'Registrar'}
+            </Button>
+            {loginStatus === 'failed' && <div className="error-message">{loginError}</div>}
+          </div>
         </Form>
       </div>
     </div>

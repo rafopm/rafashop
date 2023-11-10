@@ -1,33 +1,47 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUser, loginUser, logoutUser } from '../redux/loginSlice';
+import { selectUser, loginUser, cookieUser, logoutUser } from '../redux/loginSlice';
 import { useCookies } from 'react-cookie';
+import jwt from 'jsonwebtoken';
 
 function LoginButton({ onClick }) {
-  const [cookies, setCookie, removeCookie] = useCookies(['userLogin']);
-  const user = useSelector((state) => selectUser(state)); // Utilizar el selector dentro de useSelector
-
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const [cookies, setCookie, removeCookie] = useCookies(['userLogin']);
+  const cookieRef = useRef(cookies.userLogin); // Crea una referencia para la cookie
+
+
 
   useEffect(() => {
-    if (cookies.userLogin) {
-      dispatch(loginUser(cookies.userLogin));
-    } else {
-      dispatch(logoutUser());
+
+    cookieRef.current = cookies.userLogin;
+    if (!user && cookieRef.current) {
+      const decodedToken = jwt.decode(cookieRef.current.token);
+      const expirationDate = new Date((decodedToken.exp) * 1000);
+      const currentDate = new Date();
+      console.log('expirationDAte', currentDate, '---', expirationDate);
+      if (currentDate > expirationDate) {
+        removeCookie('userLogin');
+      } else {
+        dispatch(cookieUser(cookieRef.current));
+      }
+
     }
-  }, [cookies.userLogin, dispatch]);
+
+
+  }, [user, dispatch, cookies.userLogin, cookieRef]);
+
 
   const handleLogout = () => {
-    dispatch(logoutUser());
-    // Eliminar la cookie de inicio de sesión
     removeCookie('userLogin');
-    // Realizar cualquier otra acción necesaria para cerrar sesión
-    // ...
+    dispatch(logoutUser());
+    // Elimina la cookie al hacer logout
   };
 
-  console.log('userLogin', user);
-
+  console.log('2', cookieRef.currentUser)
+  console.log('3', cookies.userLogin)
+  console.log('user:', user)
   return (
     <div>
       <button onClick={user ? handleLogout : onClick}>

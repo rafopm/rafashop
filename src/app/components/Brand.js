@@ -8,7 +8,7 @@ const Brand = () => {
     const handleSearch = (event) => {
         const searchTerm = event.target.value;
        
-        console.log('Buscar productos con el término:', searchTerm);
+        //console.log('Buscar productos con el término:', searchTerm);
     };
 
     return (

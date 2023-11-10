@@ -18,7 +18,7 @@ export async function getPathFromIds() {
 
 export async function getItemsData(id){
   const items = await fetchProducts();
-console.log("items",items)
+//console.log("items",items)
   const product = items.find((item) => convertToPath(item.nombre) === id);
 
   return {
@@ -28,7 +28,7 @@ console.log("items",items)
 }
 
 export function convertToPath(nombre){
-  console.log("nombre",nombre)
+  //console.log("nombre",nombre)
     //return title.toLowerCase().replace(/\s/g, "-")
     return nombre.toLowerCase().replace(/[\s,;,',./]+/g, '-');
 }
