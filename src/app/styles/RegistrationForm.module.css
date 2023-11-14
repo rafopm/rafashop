@@ -9,7 +9,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 990;
+    z-index: 999;
   }
   
   /* Estilos para el contenido del popup */
@@ -22,7 +22,12 @@
     height: auto;
     width: 350px;
   }
-  
+
+  .errorMensaje{
+    color: red !important;
+    margin-left: 12px;
+  }
+
   .closeButton{
     color: red;
     
@@ -32,14 +37,4 @@
     display: flex;
     justify-content: flex-end;
     margin: -10px;
-  }
-
-  .buttonContainer{
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .errorMessage{
-    color: red;
-    margin: 0 0 15px;    
   }

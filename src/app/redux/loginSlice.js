@@ -12,7 +12,6 @@ export const loginUser = createAsyncThunk(
       const response = await instance.post('/users/login', userData);
       return response.data;
     } catch (error) {
-      // Puedes manejar errores aquí, por ejemplo, lanzar un error personalizado
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -35,6 +34,8 @@ const loginSlice = createSlice({
     user: null,
     status: 'idle',
     error: null,
+    errorMessage: null, // Nuevo estado para el mensaje de error personalizado
+
   },
   reducers: {
     logoutUser: (state) => {
@@ -57,8 +58,8 @@ const loginSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+        state.errorMessage = 'Usuario o contraseña incorrectos'; // Establecer el mensaje de error personalizado
       })
-
       .addCase(cookieUser.fulfilled, (state, action) => {
         state.user = action.payload;
       });
@@ -71,5 +72,7 @@ export const { logoutUser } = loginSlice.actions;
 export const selectUser = (state) => state.login.user;
 export const selectLoginStatus = (state) => state.login.status;
 export const selectLoginError = (state) => state.login.error;
+export const selectLoginErrorMessage = (state) => state.login.errorMessage; // Nuevo selector para el mensaje de error personalizado
+
 
 export default loginSlice.reducer;

@@ -34,7 +34,7 @@ const ProductCard = ({ item, showAs, qty }) => {
 
 
                                 {item.imagenes.map((imagen, index) => (
-                                    <Carousel.Item key={index}>
+                                    <Carousel.Item key={item.id}>
                                         <img className="w-100 h-100" src={imagen.url} alt={imagen.description} style={{ objectFit: 'cover' }} />
                                         <Carousel.Caption>
                                             
