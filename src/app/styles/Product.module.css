@@ -1,0 +1,40 @@
+.container {
+  max-width: 90%;
+  margin: auto;
+  overflow: auto; /* Habilitar barras de desplazamiento */
+  border: 1px solid black;
+}
+
+.tableContainer {
+  min-width: 600px; /* Ancho del contenedor */
+  height: 200px; /* Altura del contenedor */
+  margin: auto;
+  
+}
+
+.table {
+  width: 100%; /* Hacer que la tabla ocupe el 100% del ancho del contenedor */
+  border-collapse: collapse;
+
+}
+
+.codigo {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.opciones {
+  overflow-x: hidden;
+  white-space: nowrap;
+  
+}
+
+.filas {
+  border-bottom: 1px solid black;
+}
+
+
+

@@ -14,7 +14,6 @@ import CarouselProducts from './CarouselProducts';
 const ProductCard = ({ item, showAs, qty }) => {
     const decodedHTML = Buffer.from(item.detalles, 'base64').toString('utf-8');
 
-
     const generateWhatsAppLink = () => {
         const number = "51123456789";
         const url = `https://wa.me/${number}?text=${encodeURIComponent(
@@ -22,7 +21,6 @@ const ProductCard = ({ item, showAs, qty }) => {
         )}`;
         window.open(url, "_blank");
     };
-
 
     if (showAs === "Page") {
         return (
