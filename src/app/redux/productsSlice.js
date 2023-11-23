@@ -8,6 +8,7 @@ const instance = axios.create({
 export const fetchProductById = createAsyncThunk(
   'products/fetchProductById',
   async (productId) => {
+    console.log('Slice product',productId)
     const response = await instance.get(`/products/${productId}`);
     return response.data;
   }
@@ -26,11 +27,12 @@ const productsSlice = createSlice({
       state.items.push(action.payload);
     },
     updateProduct: (state, action) => {
-      const productIndex = state.items.findIndex(
-        (product) => product.id === action.payload.id
-      );
+      const { id, body } = action.payload;
+      const productIndex = state.items.findIndex((product) => product._id === id);
+    
       if (productIndex !== -1) {
-        state.items[productIndex] = action.payload;
+        // Replace the existing product with the updated one
+        state.items[productIndex] = { ...state.items[productIndex], ...body };
       }
     },
     filterProducts: (state, action) => {

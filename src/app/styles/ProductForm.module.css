@@ -64,3 +64,20 @@
     display: flex;
     justify-content: space-around;
   }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .half {
+    
+  }
+
+  .formGroup textarea {
+    height: 200px; /* Ajusta la altura según tus necesidades */
+    overflow-y: scroll; /* Agrega una barra de desplazamiento vertical */
+  }

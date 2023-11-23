@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts, selectProducts, selectSearchTerm } from '../../redux/productsSlice';
 import Styles from '../../styles/Product.module.css';
 import ProductForm from './ProductForm';
+import ProductRow from './ProductRow';
 
 const Product = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Product = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [productId, setProductId] = useState(null);
+  const [isAddingProduct, setIsAddingProduct] = useState(false);
 
   console.log(products)
   useEffect(() => {
@@ -24,17 +26,27 @@ const Product = () => {
   }
 
   const handleOpenModal = (productId) => {
+    console.log('ProductId', productId)
     setSelectedProductId(productId);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    dispatch(fetchProducts());
+  };
+
+  const handleCloseModalAdd = () => {
+    setIsAddingProduct(false);
+  };
+
+  const handleAddProduct = () => {
+    setIsAddingProduct(true);
   };
 
   return (
     <div>
-      <div><button onClick={handleOpenModal}>Agregar producto</button> / input para filtrar productos</div>
+      <div><button onClick={handleAddProduct}>Agregar producto</button> / input para filtrar productos</div>
       <div className={Styles.container}>
         <div className={Styles.tableContainer}>
           <div className={Styles.table}>
@@ -46,26 +58,14 @@ const Product = () => {
               <div className="col">Marca</div>
             </div>
             {products.map((product) => (
-              <div className={`row ${Styles.filas}`} key={product._id}>
-                <div className={`col ${Styles.opciones}`}>
-                  <button onClick={() => handleOpenModal(product._id)}>Editar</button>
-                  <button >Eliminar</button></div>
-                <div className={`col ${Styles.codigo}`}>{product._id}</div>
-                <div className="col">{product.nombre}</div>
-                <div className="col">{product.categoria.nombre}</div>
-                <div className="col">{product.marca.nombre}</div>
-
-              </div>
+              <>
+                <ProductRow item={product} />
+              </>
             ))}
           </div>
         </div>
       </div>
-      {isModalOpen && (
-
-          <ProductForm onClose={handleCloseModal} productId={selectedProductId} />
-
-
-      )}
+      {isAddingProduct && <ProductForm onClose={handleCloseModalAdd}/>}
     </div>
   );
 };
