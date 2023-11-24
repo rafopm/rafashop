@@ -9,13 +9,11 @@
   min-width: 600px; /* Ancho del contenedor */
   height: 200px; /* Altura del contenedor */
   margin: auto;
-  
 }
 
 .table {
   width: 100%; /* Hacer que la tabla ocupe el 100% del ancho del contenedor */
   border-collapse: collapse;
-
 }
 
 .codigo {
@@ -27,14 +25,37 @@
 }
 
 .opciones {
+  display: flex;
   overflow-x: hidden;
   white-space: nowrap;
-  
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin: 0 0 0 10px;
 }
 
 .filas {
   border-bottom: 1px solid black;
 }
 
+.greenRow {
+  background-color: rgb(163, 251, 163);
+  border-bottom: 1px solid black;
+}
 
+.redRow {
+  background-color: rgb(254, 201, 201);
+  border-bottom: 1px solid black;
+}
 
+.boton {
+  padding: 3px;
+  background-color: var(--primary);
+}
+
+.addProduct {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  gap: 10px;
+}

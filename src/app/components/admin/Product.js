@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts, selectProducts, selectSearchTerm } from '../../redux/productsSlice';
+import { fetchProducts, selectProducts, selectSearchTerm, updateProduct } from '../../redux/productsSlice';
 import Styles from '../../styles/Product.module.css';
 import ProductForm from './ProductForm';
 import ProductRow from './ProductRow';
@@ -15,6 +15,7 @@ const Product = () => {
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [productId, setProductId] = useState(null);
   const [isAddingProduct, setIsAddingProduct] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   console.log(products)
   useEffect(() => {
@@ -33,7 +34,10 @@ const Product = () => {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    dispatch(fetchProducts());
+    // Reemplaza la llamada a fetchProducts por dispatch(updateProduct) con el producto actualizado
+    if (selectedProductId) {
+      dispatch(updateProduct(response)); // Asegúrate de tener la respuesta (response) del servidor al agregar o actualizar el producto
+    }
   };
 
   const handleCloseModalAdd = () => {
@@ -44,9 +48,21 @@ const Product = () => {
     setIsAddingProduct(true);
   };
 
+  const handleSearchTermChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
     <div>
-      <div><button onClick={handleAddProduct}>Agregar producto</button> / input para filtrar productos</div>
+      <div className={Styles.addProduct}>
+        <button className={Styles.boton} onClick={handleAddProduct}>Agregar producto</button>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleSearchTermChange}
+          placeholder="Buscar por nombre"
+        />
+      </div>
       <div className={Styles.container}>
         <div className={Styles.tableContainer}>
           <div className={Styles.table}>
@@ -54,18 +70,20 @@ const Product = () => {
               <div className="col">Opciones</div>
               <div className={`col ${Styles.codigo}`}>Código</div>
               <div className="col">Nombre</div>
-              <div className="col">Categoría</div>
-              <div className="col">Marca</div>
+              <div className="col">Precio</div>
+              <div className="col">Descuento (%)</div>
             </div>
-            {products.map((product) => (
-              <>
-                <ProductRow item={product} />
-              </>
-            ))}
+            {products
+              .filter((product) =>
+                product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+              .map((product) => (
+                <ProductRow key={product._id} item={product} />
+              ))}
           </div>
         </div>
       </div>
-      {isAddingProduct && <ProductForm onClose={handleCloseModalAdd}/>}
+      {isAddingProduct && <ProductForm onClose={handleCloseModalAdd} />}
     </div>
   );
 };

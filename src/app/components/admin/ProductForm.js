@@ -2,18 +2,16 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBrands } from '../../redux/brandsSlice';
-import { addProduct, updateProduct, fetchProductById } from '../../redux/productsSlice';
+import { addProduct, updateProductAsync, updateProduct, fetchProductById } from '../../redux/productsSlice';
 import Styles from '../../styles/ProductForm.module.css';
 
 const ProductForm = ({ onClose, itemForm }) => {
-    const [productData, setProductData] = useState(null);
+    const [productData, setProductData] = useState({});
     const [formData, setFormData] = useState({});
     const dispatch = useDispatch();
     const brands = useSelector((state) => state.brands.brands);
     const categories = useSelector((state) => state.categories.categories);
-    
 
-    console.log('brands: ',brands)
     const [id, setId] = useState(itemForm?._id || '');
     const [nombre, setNombre] = useState(itemForm?.nombre || '');
     const [descripcion, setDescripcion] = useState(itemForm?.descripcion || '');
@@ -21,18 +19,21 @@ const ProductForm = ({ onClose, itemForm }) => {
     const [marca, setMarca] = useState(itemForm?.marca || null);
     const [descuentos, setDescuentos] = useState(itemForm?.descuentos || '');
     const [detalles, setDetalles] = useState(itemForm?.detalles || '');
+    const [detallesToShow, setDetallesToShow] = useState(itemForm?.detalles || '');
+    const [detallesToSubmit, setDetallesToSubmit] = useState(itemForm?.detalles || '');
     const [stock, setStock] = useState(itemForm?.stock || '');
-    const [imagenes, setImagenes] = useState(itemForm?.imagenes || '');
+    const [imagenes, setImagenes] = useState(itemForm?.imagenes || [{ url: '', descripcion: '' }, { url: '', descripcion: '' }, { url: '', descripcion: '' }]);
 
     const [modelo, setModelo] = useState(itemForm?.modelo || '');
     const [precio, setPrecio] = useState(itemForm?.precio || '');
 
+    const [activo, setActivo] = useState(itemForm?.activo || '');
 
-    const decodedHTML = itemForm ? Buffer.from(itemForm.detalles, 'base64').toString('utf-8') : '';
+    //const decodedHTML = itemForm ? Buffer.from(itemForm.detalles, 'base64').toString('utf-8') : '';
 
     useEffect(() => {
         dispatch(fetchBrands());
-      }, [dispatch]);
+    }, [dispatch]);
 
     useEffect(() => {
         if (itemForm) {
@@ -42,11 +43,19 @@ const ProductForm = ({ onClose, itemForm }) => {
             setMarca(itemForm.marca || '');
             setDescuentos(itemForm.descuentos || '');
             setDetalles(itemForm.detalles || '');
-            setStock(itemForm.stock || '');
+            setDetallesToSubmit(itemForm.detalles || '');
 
+            // Almacenar la versión codificada de los detalles
+            const decodedHTML = Buffer.from(itemForm.detalles, 'base64').toString('utf-8');
+            //const encodedHTML = Buffer.from(itemForm.detalles, 'base64').toString('utf-8');
+            setDetallesToShow(decodedHTML);
+
+            setStock(itemForm.stock || '');
             setModelo(itemForm.modelo || '');
             setPrecio(itemForm.precio || '');
-            setImagenes(itemForm.imagenes || []);
+            setImagenes(itemForm.imagenes || [{ url: '', descripcion: '' }, { url: '', descripcion: '' }, { url: '', descripcion: '' }]);
+
+            setActivo(itemForm.activo || '');
         }
     }, [itemForm]);
 
@@ -68,7 +77,6 @@ const ProductForm = ({ onClose, itemForm }) => {
 
     const handleChangeMarca = (e) => {
         const selectedMarca = brands.find(brand => brand._id === e.target.value);
-        console.log('Selected',selectedMarca);
         setMarca(selectedMarca || null);
     };
 
@@ -76,8 +84,11 @@ const ProductForm = ({ onClose, itemForm }) => {
         setDescuentos(e.target.value);
     };
     const handleChangeDetalles = (e) => {
-        setDetalles(e.target.value);
+        const rawHTML = e.target.value;
+        setDetallesToSubmit(rawHTML);
+        setDetallesToShow(rawHTML);
     };
+
     const handleChangeStock = (e) => {
         setStock(e.target.value);
     };
@@ -88,46 +99,55 @@ const ProductForm = ({ onClose, itemForm }) => {
     const handleChangePrecio = (e) => {
         setPrecio(e.target.value);
     };
+
     const handleChangeImagenes = (e, index) => {
         const newImagenes = [...imagenes];
-        newImagenes[index] = e.target.value;
+        newImagenes[index] = { ...newImagenes[index], url: e.target.value, descripcion: `Imagen de ${nombre}` };
         setImagenes(newImagenes);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        const encodedDetalles = Buffer.from(detallesToSubmit).toString('base64');
         const formData = {
             nombre,
             descripcion,
             categoria: categoria ? categoria._id : null,
             marca: marca ? marca._id : null,
             descuentos,
-            detalles,
-            stock,
-            imagenes,
-
+            detalles: encodedDetalles,
+            imagenes: imagenes,
             modelo,
-            precio
+            precio,
+            activo: true,
         };
 
-        
-        if (itemForm) {
-            const updatedProduct = {
-                id: itemForm._id,
-                body: formData
-            }
-            console.log('updatedProduct',updatedProduct);
-            dispatch(updateProduct(updatedProduct));
-        } else {
-            dispatch(addProduct(formData));
-        }
-        onClose();
-    };
+        console.log('formData:', formData);
 
- 
+        try {
+            if (itemForm) {
+                const updatedProduct = {
+                    id: itemForm._id,
+                    body: formData,
+                };
+
+                const response = await dispatch(updateProductAsync(updatedProduct));
+                console.log('updateProduct response:', response);
+            } else {
+                console.log('post', formData);
+                const response = await dispatch(addProduct(formData));
+                console.log('addProduct response:', response);
+            }
+            dispatch(updateProduct(response));
+            onClose();
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
     return (
         <div className={`modal ${Styles.modal}`}>
+            <br></br>
             <div className={`modalContent ${Styles.modalContent}`}>
                 <span className={Styles.close} onClick={onClose}>
 
@@ -142,7 +162,7 @@ const ProductForm = ({ onClose, itemForm }) => {
                             name="nombre"
                             value={nombre || ''}
                             onChange={handleChangeNombre}
-                            
+
                         />
                     </div>
                     <div className={Styles.formGroup}>
@@ -153,7 +173,7 @@ const ProductForm = ({ onClose, itemForm }) => {
                             name="descripcion"
                             value={descripcion || ''}
                             onChange={handleChangeDescripcion}
-                            
+
                         />
                     </div>
                     <div className={Styles.formGroup}>
@@ -163,7 +183,7 @@ const ProductForm = ({ onClose, itemForm }) => {
                             name="categoria"
                             value={categoria ? categoria._id : ''}
                             onChange={handleChangeCategoria}
-                            
+
                         >
                             <option value="" disabled>Selecciona una categoría</option>
                             {categories.map((category) => (
@@ -177,19 +197,19 @@ const ProductForm = ({ onClose, itemForm }) => {
                         <div className={Styles.half}>
                             <label htmlFor="marca">Marca</label>
                             <select
-                            id="marca"
-                            name="marca"
-                            value={marca ? marca._id : ''}
-                            onChange={handleChangeMarca}
-                           
-                        >
-                            <option value="" disabled>Selecciona una marca</option>
-                            {brands.map((brand) => (
-                                <option value={brand._id} key={brand._id}>
-                                    {brand.nombre}
-                                </option>
-                            ))}
-                        </select>
+                                id="marca"
+                                name="marca"
+                                value={marca ? marca._id : ''}
+                                onChange={handleChangeMarca}
+
+                            >
+                                <option value="" disabled>Selecciona una marca</option>
+                                {brands.map((brand) => (
+                                    <option value={brand._id} key={brand._id}>
+                                        {brand.nombre}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div className={Styles.half}>
                             <label htmlFor="modelo">Modelo</label>
@@ -199,7 +219,7 @@ const ProductForm = ({ onClose, itemForm }) => {
                                 name="modelo"
                                 value={modelo}
                                 onChange={handleChangeModelo}
-                                
+
                             />
                         </div>
                     </div>
@@ -212,7 +232,7 @@ const ProductForm = ({ onClose, itemForm }) => {
                                 name="precio"
                                 value={precio}
                                 onChange={handleChangePrecio}
-                               
+
                             />
                         </div>
                         <div className={Styles.half}>
@@ -223,7 +243,7 @@ const ProductForm = ({ onClose, itemForm }) => {
                                 name="descuentos"
                                 value={descuentos}
                                 onChange={handleChangeDescuentos}
-                                
+
                             />
                         </div>
                         <div className={Styles.half}>
@@ -234,7 +254,7 @@ const ProductForm = ({ onClose, itemForm }) => {
                                 name="precio"
                                 value={precio - precio * descuentos / 100}
                                 onChange={handleChangePrecio}
-                                
+
                             />
                         </div>
                     </div>
@@ -249,7 +269,6 @@ const ProductForm = ({ onClose, itemForm }) => {
                                 name={`imagen${index}`}
                                 value={imagenes[index]?.url || ''}
                                 onChange={(e) => handleChangeImagenes(e, index)}
-                                
                             />
                         ))}
                     </div>
@@ -258,9 +277,8 @@ const ProductForm = ({ onClose, itemForm }) => {
                         <textarea
                             id="detalles"
                             name="detalles"
-                            value={decodedHTML}
+                            value={detallesToShow}
                             onChange={handleChangeDetalles}
-                            
                         ></textarea>
                     </div>
 

@@ -35,7 +35,7 @@ const ProductCard = ({ item, showAs, qty }) => {
                                     <Carousel.Item key={item.id}>
                                         <img className="w-100 h-100" src={imagen.url} alt={imagen.description} style={{ objectFit: 'cover' }} />
                                         <Carousel.Caption>
-                                            
+
                                         </Carousel.Caption>
                                     </Carousel.Item>
                                 ))}
@@ -58,141 +58,9 @@ const ProductCard = ({ item, showAs, qty }) => {
                                 <p className="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
                                     clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
                                     Nonumy</p>
-                                <div className="d-flex mb-3">
-                                    <strong className="text-dark mr-3">Sizes:</strong>
-                                    <Form>
-                                        <div className="custom-control custom-radio custom-control-inline">
-                                            <Form.Check
-                                                type="radio"
-                                                id="size-1"
-                                                name="size"
-                                                label="XS"
-                                                className="custom-control-input"
-                                            />
-                                        </div>
-                                        <div className="custom-control custom-radio custom-control-inline">
-                                            <Form.Check
-                                                type="radio"
-                                                id="size-2"
-                                                name="size"
-                                                label="S"
-                                                className="custom-control-input"
-                                            />
-                                        </div>
-                                        <div className="custom-control custom-radio custom-control-inline">
-                                            <Form.Check
-                                                type="radio"
-                                                id="size-3"
-                                                name="size"
-                                                label="M"
-                                                className="custom-control-input"
-                                            />
-                                        </div>
-                                        <div className="custom-control custom-radio custom-control-inline">
-                                            <Form.Check
-                                                type="radio"
-                                                id="size-4"
-                                                name="size"
-                                                label="L"
-                                                className="custom-control-input"
-                                            />
-                                        </div>
-                                        <div className="custom-control custom-radio custom-control-inline">
-                                            <Form.Check
-                                                type="radio"
-                                                id="size-5"
-                                                name="size"
-                                                label="XL"
-                                                className="custom-control-input"
-                                            />
-                                        </div>
-                                    </Form>
-                                </div>
-                                <div className="d-flex mb-4">
-                                    <strong className="text-dark mr-3">Colors:</strong>
-                                    <Form>
-                                        <div className="custom-control custom-radio custom-control-inline">
-                                            <Form.Check
-                                                type="radio"
-                                                id="color-1"
-                                                name="color"
-                                                label="Black"
-                                                className="custom-control-input"
-                                            />
-                                        </div>
-                                        <div className="custom-control custom-radio custom-control-inline">
-                                            <Form.Check
-                                                type="radio"
-                                                id="color-2"
-                                                name="color"
-                                                label="White"
-                                                className="custom-control-input"
-                                            />
-                                        </div>
-                                        <div className="custom-control custom-radio custom-control-inline">
-                                            <Form.Check
-                                                type="radio"
-                                                id="color-3"
-                                                name="color"
-                                                label="Red"
-                                                className="custom-control-input"
-                                            />
-                                        </div>
-                                        <div className="custom-control custom-radio custom-control-inline">
-                                            <Form.Check
-                                                type="radio"
-                                                id="color-4"
-                                                name="color"
-                                                label="Blue"
-                                                className="custom-control-input"
-                                            />
-                                        </div>
-                                        <div className="custom-control custom-radio custom-control-inline">
-                                            <Form.Check
-                                                type="radio"
-                                                id="color-5"
-                                                name="color"
-                                                label="Green"
-                                                className="custom-control-input"
-                                            />
-                                        </div>
-                                    </Form>
-                                </div>
-                                <div className="d-flex align-items-center mb-4 pt-2">
-                                    <div className="input-group quantity mr-3" style={{ width: "130px" }}>
-                                        <div className="input-group-btn">
-                                            <Button className="btn btn-primary btn-minus">
-                                                <i className="fa fa-minus"></i>
-                                            </Button>
-                                        </div>
-                                        <input type="text" className="form-control bg-secondary border-0 text-center" value="1" />
-                                        <div className="input-group-btn">
-                                            <Button className="btn btn-primary btn-plus">
-                                                <i className="fa fa-plus"></i>
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    <Button className="btn btn-primary px-3">
-                                        <i className="fa fa-shopping-cart mr-1"></i> Add To Cart
-                                    </Button>
-                                </div>
-                                <div className="d-flex pt-2">
-                                    <strong className="text-dark mr-2">Share on:</strong>
-                                    <div className="d-inline-flex">
-                                        <a className="text-dark px-2" href="">
-                                            <i className="fab fa-facebook-f"></i>
-                                        </a>
-                                        <a className="text-dark px-2" href="">
-                                            <i className="fab fa-twitter"></i>
-                                        </a>
-                                        <a className="text-dark px-2" href="">
-                                            <i className="fab fa-linkedin-in"></i>
-                                        </a>
-                                        <a className="text-dark px-2" href="">
-                                            <i className="fab fa-pinterest"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                                                                
+                                
+                                
                             </div>
                         </Col>
                     </Row>
@@ -260,10 +128,10 @@ const ProductCard = ({ item, showAs, qty }) => {
             </div>
             <Card.Body className='text-center'>
                 <Card.Title>{item.nombre}</Card.Title>
+                <Card.Text><span>S/{item.precio}</span></Card.Text>
                 <Card.Text>
-                    <span>$ {item.precio.valor}</span>
                     <span>
-                        <Rating rate={item.rating.rate} />
+                        <Rating rate={item.rating?.rate} />
                     </span>
                 </Card.Text>
             </Card.Body>

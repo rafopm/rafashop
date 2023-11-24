@@ -24,7 +24,7 @@ const ProductList = () => {
     );
 
     const topRatedProducts = filteredProducts
-        .sort((a, b) => b.rating.rate - a.rating.rate)
+        .sort((a, b) => b.rating?.rate - a.rating?.rate)
         .slice(0, 10);
 
     return (

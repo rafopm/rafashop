@@ -22,21 +22,21 @@ const CategoryList = () => {
   }
 
   return (
-      <div className="container-fluid pt-2">
-        <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4"><span className=" pr-3">Categorias</span></h2>
-        <div className="d-flex justify-content-around flex-wrap  mx-xl-5">
-          {categories.map((category, key) => (
-            <div className="cat-item d-flex align-items-center mb-4 bg-white p-3" key={key}>
-              <div className="overflow-hidden" style={{ width: '100px', height: '100px' }}>
-                <img className="img-fluid" src={`img/cat-${key + 1}.jpg`} alt="" />
-              </div>
-              <div className="flex-fill pl-3">
-                <h6 style={{ width: '160px', textAlign:"center"}}>{category}</h6>
-              </div>
+    <div className="container-fluid pt-2">
+      <h2 className="section-title position-relative text-uppercase mx-xl-5 mb-4"><span className=" pr-3">Categorias</span></h2>
+      <div className="d-flex justify-content-around flex-wrap  mx-xl-5">
+        {categories.map((category, key) => (
+          <div className="cat-item d-flex align-items-center mb-4 bg-white p-3" key={key}>
+            <div className="overflow-hidden" style={{ width: '100px', height: '100px' }}>
+              <img className="img-fluid" src={`img/cat-${key + 1}.jpg`} alt="" />
             </div>
-          ))}
-        </div>
+            <div className="flex-fill pl-3">
+              <h6 style={{ width: '160px', textAlign: "center" }}>{category.nombre}</h6>
+            </div>
+          </div>
+        ))}
       </div>
+    </div>
   );
 };
 

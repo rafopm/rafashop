@@ -34,10 +34,10 @@ const TopBar = () => {
                     <LoginButton onClick={openForm} />
                     {showForm && <LoginForm onClose={handleClose} />}
                 </div>
-                <Link href='/'>USD</Link>
-                <Link href='/'>ENG</Link>
-                <span><FaHeart /> 0 </span>
-                <span><FaShoppingCart /> 0 </span>
+                {/* <Link href='/'>USD</Link>
+                <Link href='/'>ENG</Link> */}
+                {/* <span><FaHeart /> 0 </span>
+                <span><FaShoppingCart /> 0 </span> */}
             </div>
 
 

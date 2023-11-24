@@ -45,7 +45,7 @@ export default function Shop() {
         <div>
 
             <div className="d-flex flex-wrap  mx-xl-5 gap-2 mt-5">
-                <h3>Productos:</h3>
+                
                 <p>
 
                 </p>

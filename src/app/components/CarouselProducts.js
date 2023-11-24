@@ -26,7 +26,7 @@ function CarouselProducts() {
   );
 
   const relatedProducts = filteredProducts
-      .sort((a, b) => b.rating.rate - a.rating.rate)
+      .sort((a, b) => b.rating?.rate - a.rating?.rate)
       .slice(0, 10);
 
   const handleLeftClick = (e) => {
@@ -55,7 +55,7 @@ function CarouselProducts() {
               </div>
               <div className={Styles.info}>
                 <span className={Styles.name}>{nombre}</span>
-                <span className={Styles.price}>U$ {precio.valor}</span>
+                <span className={Styles.price}>S/{precio}</span>
               </div>
             </div>
           );

@@ -5,14 +5,36 @@ const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL_API,
 });
 
+
 export const fetchProductById = createAsyncThunk(
   'products/fetchProductById',
   async (productId) => {
-    console.log('Slice product',productId)
-    const response = await instance.get(`/products/${productId}`);
+    try {
+      const response = await instance.get(`/products/${productId}`);
+      return response.data;  // Assuming the response contains the product details directly
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const addProduct = createAsyncThunk(
+  'products/addProduct',
+  async (formData) => {
+    // Aquí se realiza la solicitud POST
+    const response = await instance.post('/products', formData);
     return response.data;
   }
 );
+
+export const updateProductAsync = createAsyncThunk(
+  'products/updateProductAsync',
+  async (updatedProduct) => {
+    const response = await instance.put(`/products/${updatedProduct.id}`, updatedProduct.body);
+    return response.data;
+  }
+);
+
 
 const productsSlice = createSlice({
   name: 'products',
@@ -21,6 +43,7 @@ const productsSlice = createSlice({
     searchTerm: '',
     status: 'idle',
     error: null,
+    selectedProduct: null, // Make sure this field is present
   },
   reducers: {
     addProduct: (state, action) => {
@@ -29,11 +52,14 @@ const productsSlice = createSlice({
     updateProduct: (state, action) => {
       const { id, body } = action.payload;
       const productIndex = state.items.findIndex((product) => product._id === id);
-    
+
       if (productIndex !== -1) {
         // Replace the existing product with the updated one
         state.items[productIndex] = { ...state.items[productIndex], ...body };
       }
+
+      // Reset the status
+      state.status = 'idle';
     },
     filterProducts: (state, action) => {
       state.filteredItems = state.items.filter((product) =>
@@ -76,9 +102,27 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.selectedProduct = action.payload;
+        state.selectedProduct = action.payload; // Corrected line
       })
       .addCase(fetchProductById.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(updateProductAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateProductAsync.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+
+        // Find and update the product in the state
+        const updatedProduct = action.payload;
+        const productIndex = state.items.findIndex((product) => product._id === updatedProduct._id);
+
+        if (productIndex !== -1) {
+          state.items[productIndex] = updatedProduct;
+        }
+      })
+      .addCase(updateProductAsync.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       })
@@ -102,6 +146,7 @@ export const deleteProduct = createAsyncThunk(
 );
 
 //Selectores
+export const selectSelectedProduct = (state) => state.products.selectedProduct;
 export const selectProducts = (state) => state.products.products;
 export const selectSearchTerm = (state) => state.products.searchTerm;
 export const selectProductById = (state, productId) => {
@@ -111,7 +156,6 @@ export function convertToPath(title) {
   return title.toLowerCase().replace(/\s/g, '-');
 }
 export const {
-  addProduct,
   updateProduct,
   filterProducts,
   searchTermUpdated,

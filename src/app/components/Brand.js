@@ -14,7 +14,7 @@ const Brand = () => {
     return (
         <div className={Styles.container}>
             <div className={Styles.brand}><span className={Styles.first}>RAFA</span><span className={Styles.second}>SHOP</span></div>
-            <div className={Styles.search}>
+            {/* <div className={Styles.search}>
                 <input
                     type="text"
                     placeholder="Buscar productos..."
@@ -22,7 +22,7 @@ const Brand = () => {
                 />
                 <FaSearch className={Styles.searchIcon} />
 
-            </div>
+            </div> */}
             <div className={Styles.contact}>
                 <span className={Styles.service}>Servicio al cliente</span>
                 <span className={Styles.phone}>+51 123 456 789</span>
